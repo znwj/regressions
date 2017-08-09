@@ -10,6 +10,7 @@
 from sklearn.metrics.pairwise import rbf_kernel
 import numpy as np
 from scipy.linalg import eigh
+from sklearn import preprocessing
 
 
 class kpls():
@@ -20,7 +21,11 @@ class kpls():
         self.scale = scale
 
     def fit(self, X, Y):
-        self.X=X
+        if self.scale is True:
+            self.scaler = preprocessing.StandardScaler().fit(X)
+            self.X=scaler.transform(X)
+        else:
+            self.X=X
         K=rbf_kernel(X,X,self.sigma)
         T=np.zeros((X.shape[0],self.n_components))
         iter_count = 0
@@ -44,6 +49,8 @@ class kpls():
         return self.T
 
     def transform(self,Z):
+        if self.scale is True:
+            Z=self.scaler.transform(Z)
         K_zx=rbf_kernel(Z,self.X,self.sigma)
         return np.dot(K_zx,self.T)
 
