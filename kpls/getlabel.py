@@ -9,6 +9,7 @@
 
 from openpyxl.reader.excel import load_workbook
 import numpy as np
+import pickle
 
 def score1(label,data):
     precision=[]
@@ -100,3 +101,9 @@ if __name__=="__main__":
     score_result2=score2(label2,data2)
     for i in score_result2:
         print(i)
+    
+    f=open("label.dat","wb")
+    pickle.dump([label1,label2],f)
+    f.close()
+    f2=open("label.dat","rb")
+    c=pickle.load(f2)

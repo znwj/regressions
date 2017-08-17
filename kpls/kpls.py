@@ -22,8 +22,8 @@ class kpls():
 
     def fit(self, X, Y):
         if self.scale is True:
-            self.scaler = preprocessing.StandardScaler().fit(X)
-            self.X=scaler.transform(X)
+            self.scaler = preprocessing.MinMaxScaler((-1,1)).fit(X)
+            self.X=self.scaler.transform(X)
         else:
             self.X=X
         K=rbf_kernel(X,X,self.sigma)
@@ -44,8 +44,8 @@ class kpls():
             iter_count=iter_count+1
         self.T=T
 
-    def fit_tranform(self,X,Y):
-        fit(self,X,Y)
+    def fit_transform(self,X,Y):
+        self.fit(X,Y)
         return self.T
 
     def transform(self,Z):

@@ -25,6 +25,7 @@ if __name__=="__main__":
     target=digits['target']
     target=to_label(target,0,9)
 
-    cc=kpls()
-    cc.fit(data,target)
+    cc=kpls(n_components=2)
+    t=cc.fit_transform(data,target)
+    print(t)
     
